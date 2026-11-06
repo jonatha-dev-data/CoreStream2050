@@ -11,8 +11,8 @@ O **CoreStream 2050** é um projeto que transforma o chassi de um DVD player vin
 * **Acesso Remoto:** Exposição e tunelamento seguro do serviço de áudio via **Ngrok**. 
 
 # Feito por:
-* *Jonatha Borges Felix
-* *João Vitor Santos de Oliveira
-* *Thiago Carvalho do Nascimento
-* *Luis Vitor
-* *Lucas Ricardo Ramos
+* Jonatha Borges Felix
+* João Vitor Santos de Oliveira
+* Thiago Carvalho do Nascimento
+* Luis Vitor
+* Lucas Ricardo Ramos
