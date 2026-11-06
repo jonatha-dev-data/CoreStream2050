@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="theme-color" content="#14121c">
+    <title>CoreStream 2050</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <symbol id="i-play" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></symbol>
+    <symbol id="i-pause" viewBox="0 0 24 24"><path d="M6 5h4v14H6zm8 0h4v14h-4z"/></symbol>
+    <symbol id="i-next" viewBox="0 0 24 24"><path d="M6 6l9 6-9 6zm10 0h2v12h-2z"/></symbol>
+    <symbol id="i-prev" viewBox="0 0 24 24"><path d="M18 6v12l-9-6zM6 6h2v12H6z"/></symbol>
+    <symbol id="i-shuffle" viewBox="0 0 24 24"><path d="M17 3l4 4-4 4V8h-2.6l-3.3 4.7L14.4 17H17v-3l4 4-4 4v-3h-3.6l-4-5.6L5.5 17H3v-2h1.5l3-4.2L4.5 7H3V5h2.5l3 4.2L11.4 5H17z"/></symbol>
+    <symbol id="i-repeat" viewBox="0 0 24 24"><path d="M7 7h10v3l4-4-4-4v3H5v6h2zm10 10H7v-3l-4 4 4 4v-3h12v-6h-2z"/></symbol>
+    <symbol id="i-down" viewBox="0 0 24 24"><path d="M7.4 8.6L12 13.2l4.6-4.6L18 10l-6 6-6-6z"/></symbol>
+    <symbol id="i-folder" viewBox="0 0 24 24"><path d="M10 4H4a2 2 0 00-2 2v12a2 2 0 002 2h16a2 2 0 002-2V8a2 2 0 00-2-2h-8z"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6z"/></symbol>
+    <symbol id="i-more" viewBox="0 0 24 24"><path d="M12 8a2 2 0 100-4 2 2 0 000 4zm0 2a2 2 0 100 4 2 2 0 000-4zm0 6a2 2 0 100 4 2 2 0 000-4z"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><path d="M19 6.4L17.6 5 12 10.6 6.4 5 5 6.4l5.6 5.6L5 17.6 6.4 19l5.6-5.6 5.6 5.6 1.4-1.4-5.6-5.6z"/></symbol>
+    <symbol id="i-back" viewBox="0 0 24 24"><path d="M20 11H7.8l5.6-5.6L12 4l-8 8 8 8 1.4-1.4L7.8 13H20z"/></symbol>
+    <symbol id="i-note" viewBox="0 0 24 24"><path d="M12 3v10.6A4 4 0 1014 17V7h4V3z"/></symbol>
+</svg>
+
+<main class="app">
+    <header class="top">
+        <h1>CoreStream 2050</h1>
+        <button class="icon-btn" id="add-btn" title="Adicionar música" aria-label="Adicionar música"><svg class="i"><use href="#i-plus"/></svg></button>
+    </header>
+
+    <nav class="tabs" role="tablist">
+        <button data-tab="songs" role="tab" aria-selected="true">Músicas</button>
+        <button data-tab="lists" role="tab" aria-selected="false">Playlists</button>
+    </nav>
+
+    <section id="v-songs" class="view">
+        <input type="search" id="search" placeholder="Buscar música" aria-label="Buscar música" hidden>
+        <p id="count" class="muted"></p>
+        <ul id="playlist" class="rows"></ul>
+        <div id="empty" class="empty">
+            <div class="cover big"><svg class="i"><use href="#i-note"/></svg></div>
+            <p id="empty-title">Carregando músicas…</p>
+            <p class="muted" id="empty-msg"></p>
+        </div>
+    </section>
+
+    <section id="v-lists" class="view" hidden>
+        <div id="pl-index">
+            <button class="wide" id="new-pl">+ Nova playlist</button>
+            <ul id="lists" class="rows"></ul>
+            <p id="lists-empty" class="muted empty-line">Nenhuma playlist ainda. Crie uma aqui ou use ⋮ em uma música.</p>
+        </div>
+        <div id="pl-detail" hidden>
+            <div class="pl-head">
+                <button class="icon-btn plain" id="pl-back" aria-label="Voltar"><svg class="i"><use href="#i-back"/></svg></button>
+                <h2 id="pl-name"></h2>
+            </div>
+            <div class="pl-actions">
+                <button class="wide" id="pl-play">Tocar</button>
+                <button class="pill" id="pl-ren">Renomear</button>
+                <button class="pill" id="pl-del">Excluir</button>
+            </div>
+            <ul id="plist" class="rows"></ul>
+            <p id="pl-empty" class="muted empty-line">Playlist vazia. Use ⋮ nas músicas para adicionar aqui.</p>
+        </div>
+    </section>
+</main>
+
+<!-- Mini player -->
+<div id="mini" class="mini" hidden>
+    <div class="mini-main" id="mini-open" role="button" tabindex="0" aria-label="Abrir player">
+        <div class="cover small" id="mini-cover"></div>
+        <div class="meta"><div class="t" id="mini-title"></div><div class="a muted" id="mini-artist"></div></div>
+    </div>
+    <button class="icon-btn plain" id="mini-play" aria-label="Tocar ou pausar"><svg class="i"><use href="#i-play"/></svg></button>
+    <button class="icon-btn plain" id="mini-next" aria-label="Próxima"><svg class="i"><use href="#i-next"/></svg></button>
+    <div class="mini-bar"><span id="mini-fill"></span></div>
+</div>
+
+<!-- Tela cheia -->
+<section id="full" class="full" aria-hidden="true">
+    <div class="full-in">
+        <button class="icon-btn plain" id="close" aria-label="Fechar"><svg class="i"><use href="#i-down"/></svg></button>
+        <div class="cover huge" id="full-cover"></div>
+        <div class="info"><h2 id="full-title">—</h2><p class="muted" id="full-artist"></p></div>
+        <div class="seek">
+            <input type="range" id="seek" min="0" max="1000" value="0" aria-label="Posição">
+            <div class="times muted"><span id="cur">0:00</span><span id="dur">0:00</span></div>
+        </div>
+        <div class="ctrls">
+            <button class="icon-btn plain" id="shuffle" aria-label="Aleatório" aria-pressed="false"><svg class="i"><use href="#i-shuffle"/></svg></button>
+            <button class="icon-btn plain" id="prev" aria-label="Anterior"><svg class="i lg"><use href="#i-prev"/></svg></button>
+            <button class="icon-btn play" id="play" aria-label="Tocar ou pausar"><svg class="i lg"><use href="#i-play"/></svg></button>
+            <button class="icon-btn plain" id="next" aria-label="Próxima"><svg class="i lg"><use href="#i-next"/></svg></button>
+            <button class="icon-btn plain" id="repeat" aria-label="Repetir" aria-pressed="false"><svg class="i"><use href="#i-repeat"/></svg><b id="one">1</b></button>
+        </div>
+    </div>
+</section>
+
+<dialog id="dlg-add">
+    <form id="add-form" class="dlg-in">
+        <h3>Adicionar música</h3>
+        <label class="pick"><span class="pick-btn">Escolher áudio</span><span id="a-fname" class="muted">Nenhum arquivo</span><input type="file" id="a-file" accept="audio/*"></label>
+        <input type="text" id="a-title" placeholder="Título" required>
+        <input type="text" id="a-artist" placeholder="Artista">
+        <label class="pick"><div class="cover small" id="a-prev"><svg class="i"><use href="#i-note"/></svg></div><span class="pick-btn">Escolher capa</span><input type="file" id="a-cover" accept="image/*"></label>
+        <div class="dlg-actions"><button type="button" id="a-cancel">Cancelar</button><button type="submit" class="primary">Salvar</button></div>
+    </form>
+</dialog>
+
+<dialog id="dlg-menu">
+    <div class="dlg-in">
+        <h3 id="menu-title"></h3>
+        <p class="muted">Adicionar à playlist</p>
+        <div id="menu-lists"></div>
+        <button type="button" class="row-btn" id="menu-new">+ Nova playlist</button>
+        <button type="button" class="row-btn danger" id="menu-del" hidden>Excluir música</button>
+        <div class="dlg-actions"><button type="button" id="menu-close">Fechar</button></div>
+    </div>
+</dialog>
+
+<audio id="audio" preload="metadata"></audio>
+<script src="script.js"></script>
+</body>
+</html>
