@@ -4,9 +4,6 @@ Player de música web com visual de aplicativo de celular. Toca as músicas guar
 
 Projeto acadêmico feito apenas com HTML, CSS e JavaScript, sem frameworks e sem dependências externas.
 
-<!-- Adicione aqui uma captura de tela do projeto, por exemplo: -->
-<!-- ![Captura de tela](docs/screenshot.png) -->
-
 ## Funcionalidades
 
 - **Biblioteca do servidor:** lê as músicas de uma pasta do servidor, incluindo subpastas.
@@ -26,35 +23,6 @@ Projeto acadêmico feito apenas com HTML, CSS e JavaScript, sem frameworks e sem
 - Media Session API
 - PowerShell (script que gera a lista de músicas)
 - IIS no Windows Server (hospedagem)
-
-## Estrutura do projeto
-
-```
-corestream/
-├── index.html        # página principal
-├── style.css         # estilos
-├── script.js         # lógica do player, músicas e playlists
-├── gerar-lista.ps1   # gera o musicas.json a partir da pasta musicas
-├── web.config        # libera formatos de áudio no IIS
-├── musicas.json      # gerado pelo script (não vai para o GitHub)
-└── musicas/          # suas músicas e capas (não vai para o GitHub)
-```
-
-## Como hospedar no Windows Server (IIS)
-
-1. Crie um site no IIS apontando para uma pasta, por exemplo `C:\inetpub\wwwroot\corestream`.
-2. Copie para essa pasta os arquivos `index.html`, `style.css`, `script.js`, `gerar-lista.ps1` e `web.config`.
-3. Crie a pasta `musicas` dentro dela e coloque as músicas (subpastas são aceitas).
-4. Clique com o botão direito em `gerar-lista.ps1` e escolha **Executar com PowerShell**. Isso cria o `musicas.json`.
-5. Acesse o endereço do site no navegador.
-
-> **Importante:** abra o site pelo endereço do servidor. Abrir o `index.html` com dois cliques no computador não funciona, porque o navegador bloqueia a leitura do `musicas.json`.
-
-Se o Windows bloquear a execução do script, rode no PowerShell, dentro da pasta do site:
-
-```powershell
-powershell -ExecutionPolicy Bypass -File .\gerar-lista.ps1
-```
 
 ### Atualizar a lista automaticamente (opcional)
 
@@ -79,11 +47,11 @@ Exemplo:
 
 ```
 musicas/
-├── Anitta/
-│   ├── Envolver.mp3
+├── Artista/
+│   ├── musica.mp3
 │   └── cover.jpg
-├── Queen - Bohemian Rhapsody.mp3
-└── Queen - Bohemian Rhapsody.jpg
+├── musicasemartista.mp3
+└── musicasemartista.jpg
 ```
 
 ## Músicas e playlists dos usuários
@@ -92,23 +60,10 @@ musicas/
 - Na aba **Playlists** é possível criar e gerenciar playlists. Em cada música, o botão **⋮** adiciona ou remove a música de uma playlist.
 - Playlists também podem conter as músicas da pasta do servidor.
 
-## Limitações
+## Autores
+* Jonatha Borges Felix
+* João Vitor Santos de Oliveira
+* Thiago Carvalho do Nascimento
+* Luis Vitor
+* Lucas Ricardo Ramos
 
-- As músicas, capas e playlists adicionadas pelos usuários ficam salvas **no navegador do próprio usuário** (IndexedDB e localStorage). Elas não vão para o servidor, não aparecem em outros aparelhos e não são vistas por outros usuários.
-- Limpar os dados do site ou usar aba anônima apaga essas músicas e playlists.
-- Apenas as músicas colocadas na pasta `musicas` do servidor são compartilhadas entre todos.
-- Para que os controles da tela bloqueada funcionem em todos os aparelhos, o ideal é acessar por HTTPS.
-
-## Melhorias futuras
-
-- Salvar músicas e playlists em um banco de dados no servidor, com upload de arquivos.
-- Contas de usuário e playlists compartilhadas.
-- Ler a capa embutida nos arquivos MP3.
-
-## Autor
-
-**[Seu nome]** — projeto da disciplina **[nome da disciplina]**, **[nome da faculdade]**.
-
-## Aviso sobre direitos autorais
-
-Não publique no GitHub músicas protegidas por direitos autorais. As pastas `musicas/` e o arquivo `musicas.json` ficam apenas no servidor.
