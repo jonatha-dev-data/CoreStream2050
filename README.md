@@ -1,15 +1,54 @@
 # CoreStream2050
-Home Audio Hub centralizado construído em chassi retro de DVD player. Servidor de streaming de áudio local exposto de forma segura via Ngrok.
+Player de música web com visual de aplicativo de celular. Toca as músicas guardadas em uma pasta do servidor (Windows Server / IIS) e permite que cada usuário adicione suas próprias músicas, com artista e capa, e crie playlists.
 
-#  CoreStream 2050
+Projeto acadêmico feito apenas com HTML, CSS e JavaScript, sem frameworks e sem dependências externas.
 
-O **CoreStream 2050** é um projeto que transforma o chassi de um DVD player vintage em um **Home Audio Hub** dedicado ao streaming de áudio e música.
+#Funcionalidades
+* Biblioteca do servidor: lê as músicas de uma pasta do servidor, incluindo subpastas.
+* Capas: usa a imagem da música ou da pasta; sem imagem, gera uma capa colorida automaticamente.
+* Adicionar música: o usuário escolhe o arquivo de áudio, o título, o artista e a capa.
+* Playlists: criar, renomear, excluir e tocar; adicionar ou remover músicas.
+* Player completo: mini player fixo, tela cheia com capa grande, barra de progresso, anterior/próxima, aleatório e repetir (desligado, todas
+  ou uma).
+* Busca na lista de músicas.
+* Controles do celular: funciona na tela bloqueada e na central de notificações (Media Session API).
+* Atalhos de teclado: Espaço toca/pausa e Esc fecha a tela cheia.
+* Layout responsivo, pensado primeiro para o celular.
 
-###  Destaques do Projeto
-* **Hardware:** Custom build montado dentro de um chassi retro de DVD player.
-* **Streaming de Áudio:** Servidor dedicado para gerenciamento e reprodução da biblioteca musical local.
-* **Acesso Remoto:** Exposição e tunelamento seguro do serviço de áudio via **Ngrok**. 
+#Tecnologias
+* HTML5, CSS3 e JavaScript (puro)
+* IndexedDB e localStorage (armazenamento no navegador)
+* Media Session API
+* PowerShell (script que gera a lista de músicas)
+* IIS no Windows Server (hospedagem)
 
+# Atualizar a lista automaticamente (opcional)
+O navegador não consegue listar uma pasta do servidor, por isso o gerar-lista.ps1 cria o arquivo musicas.json com a lista de músicas. Rode o script sempre que adicionar ou remover músicas ou capas. Para automatizar, crie uma tarefa no Agendador de Tarefas (execute em um Prompt de Comando como administrador e troque o caminho pelo da sua pasta):
+
+schtasks /Create /TN "CoreStream - atualizar lista" /SC MINUTE /MO 15 /RU SYSTEM /TR "powershell.exe -NoProfile -ExecutionPolicy Bypass -File \"C:\inetpub\wwwroot\corestream\gerar-lista.ps1\""
+
+#Organizando as músicas e capas
+Nome do arquivo: use Artista - Título.mp3. Se o nome não tiver " - ", o nome da pasta da música é usado como artista.
+Formatos de áudio aceitos: mp3, flac, ogg, oga, opus, wav, m4a, aac e weba.
+Capas (a primeira que existir é usada):
+Imagem com o mesmo nome da música: Artista - Título.jpg
+Imagem da pasta chamada cover, folder, front ou capa (.jpg, .jpeg, .png ou .webp
+
+Exemplo:
+  Musicas/
+    Musica1.mp3
+    Musica2.mp3
+    Cover1.jpg
+    Artista/
+      MusicaArista.mp3
+      MusicaArtista.jpg
+  
+
+#Músicas e playlists dos usuários
+* O botão + abre a janela para adicionar uma música (áudio, título, artista e capa).
+* Na aba Playlists é possível criar e gerenciar playlists. Em cada música, o botão ⋮ adiciona ou remove a música de uma playlist.
+* Playlists também podem conter as músicas da pasta do servidor.
+  
 # Feito por:
 * Jonatha Borges Felix
 * João Vitor Santos de Oliveira
