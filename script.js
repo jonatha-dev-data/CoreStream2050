@@ -301,7 +301,8 @@ $('add-form').addEventListener('submit', async (e) => {
     if (current < 0) { queue = library.slice(); play(queue.length - 1, false); }
 });
 
-document.querySelectorAll('dialog').forEach(d => d.addEventListener('click', (e) => { if (e.target === d) d.close(); }));
+// Só o menu ⋮ fecha ao tocar fora. A janela de adicionar música não, para não perder o que foi digitado.
+$('dlg-menu').addEventListener('click', (e) => { if (e.target === e.currentTarget) e.currentTarget.close(); });
 
 /* ---------- Reprodução ---------- */
 function play(i, autoplay = true) {
